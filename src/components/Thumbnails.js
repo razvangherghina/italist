@@ -6,12 +6,12 @@ class Thumbnails extends React.Component {
 
     render() {
         return (
-            <div className="gif-list">
+            <div className="row">
                 {this
                     .props[this.props.thType]
                     .map(image => (
-                        <div key={image} className="gif-item">
-                            <img className={this.props.thType} src={image} role="presentation"/>
+                        <div className="col-sm-6 col-md-4">
+                            <img key={image} className="thumbnail" src={image} role="presentation"/>
                         </div>
                     ))}
             </div>

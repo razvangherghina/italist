@@ -14,12 +14,12 @@ const Header = () => (
                     <Link className="nav-link" to="/">
                         120x120 Thumbnails
                     </Link>
-                </li>,
+                </li>
                 <li className="nav-item" key={2}>
                     <Link className="nav-link" to="/big">
                         360x360 Thumbnails
                     </Link>
-                </li>,
+                </li>
             </ul>
         </div>
     </nav>
