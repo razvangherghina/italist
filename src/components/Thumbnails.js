@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import './Thumbnails.css';
 
 class Thumbnails extends React.Component {
 
-    render() {       
+    render() {
         return (
             <div className="gif-list">
                 {this
@@ -28,5 +28,9 @@ function mapStateToProps(state) {
             : 't120'
     };
 }
-
+Thumbnails.propTypes = {
+    t120: PropTypes.arrayOf(PropTypes.string).isRequired,
+    t360: PropTypes.arrayOf(PropTypes.string).isRequired,
+    thType: PropTypes.string.isRequired
+};
 export default connect(mapStateToProps)(Thumbnails);
