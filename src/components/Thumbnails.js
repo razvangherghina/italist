@@ -10,8 +10,8 @@ class Thumbnails extends React.Component {
                 {this
                     .props[this.props.thType]
                     .map(image => (
-                        <div className="col-sm-6 col-md-4">
-                            <img key={image} className="thumbnail" src={image} role="presentation"/>
+                        <div key={image} className="col-sm-6 col-md-4">
+                            <img className="thumbnail" src={image} role="presentation"/>
                         </div>
                     ))}
             </div>
