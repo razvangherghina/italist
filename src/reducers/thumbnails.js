@@ -13,6 +13,8 @@ const thumbnails = (state = initialState, action) => {
         case START_FETCH:
             return {
                 ...state,
+                t120:[],
+                t360:[],
                 fetching: true
             };
             // thumbnails list arrived from server
