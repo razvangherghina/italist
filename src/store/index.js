@@ -23,6 +23,6 @@ if (module.hot) {
 }
 
 
-//store.dispatch(mockFetch());
+store.dispatch(mockFetch());
 
 export default store;

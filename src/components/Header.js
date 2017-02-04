@@ -35,13 +35,21 @@ class Header extends React.Component {
                     <ul className="nav navbar-nav navbar-right">
                         <li className="nav-item">
                             <button
-                                onClick={() => !this.props.disabled
-                                ? this.props.actions.upload()
-                                : null}
+                                onClick={() => {
+                                const fileInput = document.getElementById("file");
+                                fileInput.click();
+                            }}
                                 type="button"
                                 className={`btn ${this.props.disabled} btn-${this.props.color} navbar-btn`}>
                                 {`Upload ${this.props.thType}x${this.props.thType}`}
                             </button>
+                            <input accept="image/*"
+                                className="hidden"
+                                type="file"
+                                id="file"
+                                onChange={(event) => !this.props.disabled
+                                ? this.props.actions.upload(event.target.files)
+                                : null}/>
                         </li>
                     </ul>
 

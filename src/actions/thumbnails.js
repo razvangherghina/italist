@@ -35,9 +35,13 @@ const getThType = () => {
         : '120';
 };
 
-export const upload = () => dispatch => {
+export const upload = (files) => dispatch => {
 
-    console.log('Upload', getThType());
+    if (!files || !files.length)
+        return;
+    const file = files[0];
+    const thType = getThType();
+    console.log('Uploading',file,getThType());     
     dispatch({type: START_UPLOAD});
     setTimeout(() => {
         dispatch({type: ERROR_UPLOAD, payload: 'Generic error'});
@@ -46,8 +50,8 @@ export const upload = () => dispatch => {
         dispatch({
             type: OK_UPLOAD,
             payload: {
-                t120: 'http://timelinethumbnailcreator.com/img/icon-brush-256.png',
-                t360: 'http://timelinethumbnailcreator.com/img/icon-brush-256.png'
+                t120: thType === '120' ? file.name : null,
+                t360: thType === '360' ? file.name : null,
             }
         });
     }, 3000);
