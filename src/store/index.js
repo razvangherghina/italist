@@ -1,14 +1,13 @@
 import {createStore, compose, applyMiddleware} from 'redux';
-import {mockFetch} from '../actions';
+import { fetchThumbnails} from '../actions';
 import {routerMiddleware} from 'react-router-redux';
-import { browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 import reduxThunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 const initialState = {};
 
-const store = createStore(rootReducer, initialState, compose(applyMiddleware(reduxThunk, 
-routerMiddleware(browserHistory)), window.devToolsExtension
+const store = createStore(rootReducer, initialState, compose(applyMiddleware(reduxThunk, routerMiddleware(browserHistory)), window.devToolsExtension
   ? window.devToolsExtension()
   : f => f));
 
@@ -22,7 +21,7 @@ if (module.hot) {
     });
 }
 
+store.dispatch(fetchThumbnails());
 
-store.dispatch(mockFetch());
 
 export default store;
