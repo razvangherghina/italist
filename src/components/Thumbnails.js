@@ -8,10 +8,18 @@ class Thumbnails extends React.Component {
             ? <h3>{this.props.message}</h3>
             : (
                 <div className="row">
+                   <div className="col-xs-12 text-center">
+                    <h3>{this.props.uploadMessage}</h3>
+                    </div>
                     {this
                         .props[this.props.thType]
                         .map(image => (
-                            <div key={image} className="col-sm-6 col-md-4">
+                            <div
+                                key={Math
+                                .random()
+                                .toString(36)
+                                .substring(5, 15)}
+                                className="col-sm-6 col-md-4">
                                 <img className="thumbnail" src={image} role="presentation"/>
                             </div>
                         ))}
@@ -21,6 +29,8 @@ class Thumbnails extends React.Component {
 }
 
 Thumbnails.propTypes = {
+    message: PropTypes.string,
+    uploadMessage: PropTypes.string,
     t120: PropTypes
         .arrayOf(PropTypes.string)
         .isRequired,
@@ -36,6 +46,11 @@ function mapStateToProps(state) {
             ? 'Fetching'
             : state.thumbnails.error
                 ? 'Error: ' + (state.thumbnails.error && state.thumbnails.error.message) || ''
+                : '',
+        uploadMessage: state.thumbnails.uploading
+            ? 'Uploading image'
+            : state.thumbnails.errorUpload
+                ? 'Error: ' + state.thumbnails.errorUpload || ''
                 : '',
         t120: state.thumbnails.t120,
         t360: state.thumbnails.t360,
