@@ -19,7 +19,7 @@ class Thumbnails extends React.Component {
                                 .random()
                                 .toString(36)
                                 .substring(5, 15)}
-                                className="col-sm-6 col-md-3 col-lg-2">
+                                className="col-sm-6 col-md-3">
                                 <img className="thumbnail" src={image} role="presentation"/>
                             </div>
                         ))}
