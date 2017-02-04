@@ -1,4 +1,5 @@
 import {createStore, compose, applyMiddleware} from 'redux';
+import {mockFetch} from '../actions';
 import {routerMiddleware} from 'react-router-redux';
 import { browserHistory} from 'react-router';
 import reduxThunk from 'redux-thunk';
@@ -20,5 +21,8 @@ if (module.hot) {
       store.replaceReducer(nextRootReducer);
     });
 }
+
+
+store.dispatch(mockFetch());
 
 export default store;
