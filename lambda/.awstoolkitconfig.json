@@ -1,0 +1,16 @@
+{
+    "name": "italist_lambda",
+    "handler": "lambda.handler",
+    "region": "eu-west-1",
+    "role": "arn:aws:iam::641920385124:role/lambda_basic_execution",
+    "description": "Lambda function for processing thumbnails.",
+    "publish": true,
+    "ignores": [
+        "testing"
+    ],
+    "tests": {
+        "success": "testing/success.json",
+        "fail1": "testing/failImage.json",
+        "fail2": "testing/failThumbnailType.json"
+    }
+}
