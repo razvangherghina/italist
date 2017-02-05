@@ -3,7 +3,6 @@ import store from '../store';
 import convert from 'xml-to-json-promise';
 import factory from 'aws-api-gateway-client';
 
-import path from 'path';
 
 const apiGatewayAddress = 'https://s5ntd5ns21.execute-api.eu-west-1.amazonaws.com/test';
 const s3Address = 'https://s3-eu-west-1.amazonaws.com/italist/';
@@ -33,7 +32,7 @@ export const ERROR_UPLOAD = 'ERROR_UPLOAD';
 export const fetchThumbnails = () => dispatch => {
     dispatch({type: START_FETCH});
 
-    api.invokeApi({}, '/', 'GET')
+    api.invokeApi({}, '/italist', 'GET')
         .then(res => convert.xmlDataToJSON(res && res.data))
         .then(json => {
 
@@ -66,13 +65,6 @@ const getThType = () => {
         : 't120';
 };
 
-const rand = () => Math
-    .random()
-    .toString(36)
-    .substring(2) + Math
-    .random()
-    .toString(36)
-    .substring(2);
 
 export const upload = (files) => dispatch => {
 
@@ -82,18 +74,13 @@ export const upload = (files) => dispatch => {
     dispatch({type: START_UPLOAD});
     if (file.size > maxSize) 
         return dispatch({type: ERROR_UPLOAD, payload: 'File too big (5Mb limit)!'});
-    const ext = path.extname(file.name);
-    const thType = getThType();
-    const key = rand();
-    const name = thType + '/' + key + ext;
+  
+    const thType = getThType(); 
 
-    readAsDataURL(file).then(f => api.invokeApi({}, '/', 'POST', {}, {
-        thType,
-        name,
-        file: f,
-        type: file.type
-    })).then(res => {
-
+    readAsDataURL(file).then(f => api.invokeApi({}, '/italist', 'POST', {}, {
+        thumbnailType: thType,       
+        file: f
+    })).then(res => {           
         if (res && res.data && res.data.errorMessage) 
             throw new Error(res.data.errorMessage);
         const receivedKey = res && res.data;
@@ -110,6 +97,8 @@ export const upload = (files) => dispatch => {
                     : null
             }
         });
-    }).catch(err => dispatch({type: ERROR_UPLOAD, payload: err}));
+    }).catch(err => {      
+        dispatch({type: ERROR_UPLOAD, payload: err});
+    });
 
 };

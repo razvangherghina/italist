@@ -23,7 +23,7 @@ exports.handler = (event, context, callback) => {
         }
     }
 
-    const thType = event.thumbnailType !== 't120'
+    const thType = event.thumbnailType === 't120'
         ? 120
         : 360;
 
