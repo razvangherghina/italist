@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-
+import './Thumbnails.css';
 class Thumbnails extends React.Component {
 
     render() {
@@ -19,8 +19,8 @@ class Thumbnails extends React.Component {
                                 .random()
                                 .toString(36)
                                 .substring(5, 15)}
-                                className="col-sm-6 col-md-3">
-                                <img className="thumbnail" src={image} role="presentation"/>
+                                className={`col-sm-6 col-md-${this.props.thType === 't120' ? 2 : 4}`}>
+                                <img className={`thumbnail ${this.props.thType}`} src={image} role="presentation"/>
                             </div>
                         ))}
                 </div>

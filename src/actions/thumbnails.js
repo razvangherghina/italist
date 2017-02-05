@@ -3,6 +3,7 @@ import store from '../store';
 import convert from 'xml-to-json-promise';
 import factory from 'aws-api-gateway-client';
 
+
 import path from 'path';
 import {readAsDataURL} from 'promise-file-reader';
 
@@ -74,9 +75,17 @@ export const upload = (files) => dispatch => {
     const thType = getThType();
     const key = rand();
     const name = thType + '/' + key + ext;
+    
 
-    console.log('Uploading', file, name);
-    readAsDataURL(file).then(buf => api.invokeApi({}, '/', 'POST', {}, {thType, name, buf})).then(res => {
+    readAsDataURL(file).then(f => api.invokeApi({}, '/', 'POST', {}, {
+        thType,
+        name,            
+        file: f,
+        type: file.type
+    })).then(res => {
+        
+        if (res && res.data && res.data.errorMessage) 
+            throw new Error(res.data.errorMessage);
         const receivedKey = res && res.data;
         if (!receivedKey) 
             throw new Error('Upload error!');
