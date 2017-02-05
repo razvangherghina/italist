@@ -3,14 +3,25 @@ import store from '../store';
 import convert from 'xml-to-json-promise';
 import factory from 'aws-api-gateway-client';
 
-
 import path from 'path';
-import {readAsDataURL} from 'promise-file-reader';
 
 const apiGatewayAddress = 'https://s5ntd5ns21.execute-api.eu-west-1.amazonaws.com/test';
 const s3Address = 'https://s3-eu-west-1.amazonaws.com/italist/';
 const api = factory.newClient({invokeUrl: apiGatewayAddress});
 const maxSize = 5 * 1024 * 1024;
+
+const readAsDataURL = (file) => {
+    if (!(file instanceof Blob)) {
+        throw new TypeError('Must be a File or Blob');
+    }
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = e => reject(`Error reading ${file.name}: ${e.target.result}`);
+        reader.readAsDataURL(file);
+    });
+};
+
 export const START_FETCH = 'START_FETCH';
 export const FETCH_ERROR = 'FETCH_ERROR';
 export const INSERT_LIST = 'INSERT_LIST';
@@ -75,15 +86,14 @@ export const upload = (files) => dispatch => {
     const thType = getThType();
     const key = rand();
     const name = thType + '/' + key + ext;
-    
 
     readAsDataURL(file).then(f => api.invokeApi({}, '/', 'POST', {}, {
         thType,
-        name,            
+        name,
         file: f,
         type: file.type
     })).then(res => {
-        
+
         if (res && res.data && res.data.errorMessage) 
             throw new Error(res.data.errorMessage);
         const receivedKey = res && res.data;
